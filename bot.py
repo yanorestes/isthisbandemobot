@@ -22,10 +22,11 @@ class TwitterBot:
 
     def reply_mentions(self):
         recent_mentions = self._get_mentions(self.since_id)
-        try:
-            for mention in recent_mentions[::-1]:
+        for mention in recent_mentions[::-1]:
+            try:
                 match = TwitterBot.mention_regex.search(mention.text)
                 if match:
+                    print(mention.text)
                     band = match.group(1)
                     answer, img_url = get_itbe_answer(band)
                     if img_url:
@@ -34,8 +35,7 @@ class TwitterBot:
                         img.close()
                     else:
                         self.api.update_status(answer, mention.id)
-        except:
-            logging.error(format_exc())
-        finally:
-            self.since_id = mention.id
-
+            except Exception:
+                logging.error(format_exc())
+            finally:
+                self.since_id = mention.id

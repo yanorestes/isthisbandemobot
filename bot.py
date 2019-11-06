@@ -6,7 +6,10 @@ import logging
 
 
 class TwitterBot:
-    mention_regex = re.compile(r'is (.*) emo\?', re.IGNORECASE)
+    mention_regexes = [
+        re.compile(r'is (.*) emo\?', re.IGNORECASE),
+        re.compile(r'@isthisemobot (.*) is emo\?', re.IGNORECASE),
+    ]
 
     def __init__(self, credentials, since_id):
         self.auth = tweepy.OAuthHandler(credentials['CONSUMER_KEY'],
@@ -24,7 +27,10 @@ class TwitterBot:
         recent_mentions = self._get_mentions(self.since_id)
         for mention in recent_mentions[::-1]:
             try:
-                match = TwitterBot.mention_regex.search(mention.text)
+                for regex in TwitterBot.mention_regexes:
+                    match = regex.search(mention.text)
+                    if match:
+                        break
                 if match:
                     print(mention.text)
                     band = match.group(1)

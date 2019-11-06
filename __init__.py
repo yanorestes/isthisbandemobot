@@ -13,7 +13,7 @@ if __name__ == '__main__':
     while run:
         try:
             emo_bot.reply_mentions()
-            print('oi')
+            print('Running...')
             sleep(30)
         except KeyboardInterrupt:
             print('Are you sure you want to kill the bot? (Y/N)')

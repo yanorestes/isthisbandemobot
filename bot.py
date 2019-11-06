@@ -31,10 +31,15 @@ class TwitterBot:
                     answer, img_url = get_itbe_answer(band)
                     if img_url:
                         filename, img = get_tmp_img(img_url)
-                        self.api.update_with_media(filename, answer, mention.id, file=img)
+                        self.api.update_with_media(filename, answer,
+                                                   in_reply_to_status_id=mention.id,
+                                                   auto_populate_reply_metadata=True,
+                                                   file=img)
                         img.close()
                     else:
-                        self.api.update_status(answer, mention.id)
+                        self.api.update_status(answer,
+                                               in_reply_to_status_id=mention.id,
+                                               auto_populate_reply_metadata=True)
             except Exception:
                 logging.error(format_exc())
             finally:

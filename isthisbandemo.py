@@ -7,8 +7,8 @@ import requests
 def get_itbe_answer(band_name):
     response = requests.get('http://isthisbandemo.com', params={'band': band_name})
     if response.status_code != 200:
-        return '"It This Band Emo?" website (http://isthisbandemo.com) \
-        is currently not responding [Error {}]'.format(response.status_code)
+        return '"It This Band Emo?" website (http://isthisbandemo.com) ' \
+               'is currently not responding [Error {}]'.format(response.status_code)
 
     max_len = 280
     img_url = None
@@ -19,8 +19,8 @@ def get_itbe_answer(band_name):
     elif 'is not an emo band' in main_answer:
         answer = 'No, ' + main_answer
     elif 'is not in our system' in main_answer:
-        return 'This band is not in our system. Tweet to @isthisbandemo \
-        requesting an update.', img_url
+        return 'This band is not in our system. Tweet to @isthisbandemo ' \
+               'requesting an update.', img_url
 
     sub_answer = soup.find('h4')
     if sub_answer:

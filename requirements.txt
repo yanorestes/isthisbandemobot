@@ -1,4 +1,3 @@
 requests
 tweepy
 bs4
-python-dotenv
